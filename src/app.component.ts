@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ngOnInit } from "@angular/core";
-import { Subscription, interval } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -17,6 +17,13 @@ export class AppComponent implements ngOnInit {
     //   console.log("Data" + data);
     // });
     // console.log("Hi");
+
+    this.subs = Observable.create((data) => {
+      let i = 0;
+      data.next(i);
+      console.log(data);
+      i++;
+    });
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
