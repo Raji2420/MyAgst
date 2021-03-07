@@ -22,6 +22,9 @@ export class AppComponent implements ngOnInit {
       let i = 1;
       setInterval(() => {
         observer.next(i);
+        if (i === 11) {
+          observer.error(new Error("Hi it is err"));
+        }
         if (i >= 10) {
           observer.complete();
         } else {
@@ -29,9 +32,17 @@ export class AppComponent implements ngOnInit {
         }
       }, 1000);
     });
-    this.subs = this.first.subscribe((data) => {
-      console.log(data);
-    });
+    this.subs = this.first.subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log("error" + err);
+      },
+      () => {
+        console.log("completed");
+      }
+    );
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
